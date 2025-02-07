@@ -55,13 +55,20 @@ class _HomeScreen extends StatelessWidget {
           );
         }
 
-        return const Padding(
-          padding: EdgeInsets.all(20),
+        return Padding(
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              AuthUserHeader(),
-              SizedBox(height: 8),
-              SocialsView(),
+              const AuthUserHeader(),
+              const SizedBox(height: 8),
+              Expanded(
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 300),
+                    child: const SocialsView(),
+                  ),
+                ),
+              ),
             ],
           ),
         );

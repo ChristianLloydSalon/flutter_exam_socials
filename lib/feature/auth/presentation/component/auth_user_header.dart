@@ -1,9 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_exam/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:flutter_exam/feature/auth/presentation/bloc/auth_options_cubit.dart';
 import 'package:flutter_exam/presentation/component/custom_button.dart';
+import 'package:flutter_exam/presentation/component/custom_network_image.dart';
 
 class AuthUserHeader extends StatelessWidget {
   const AuthUserHeader({super.key});
@@ -52,12 +52,14 @@ class _AuthDetailsView extends StatelessWidget {
                 children: [
                   CustomButton(
                     label: 'Logout',
+                    foregroundColor: Colors.red,
                     onTap: () {
                       context.read<AuthBloc>().add(const AuthLogoutRequested());
                     },
                   ),
                   CustomButton(
                     label: 'Cancel',
+                    foregroundColor: Colors.blue,
                     onTap: () => context.read<AuthOptionsCubit>().hide(),
                   ),
                 ],
@@ -80,23 +82,10 @@ class _Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipOval(
-      child: CachedNetworkImage(
+      child: CustomNetworkImage(
         imageUrl: imageUrl,
         width: 40,
         height: 40,
-        fit: BoxFit.cover,
-        placeholder: (context, url) => Container(
-          width: 40,
-          height: 40,
-          alignment: Alignment.center,
-          child: const CircularProgressIndicator(),
-        ),
-        errorWidget: (context, url, error) => Container(
-          width: 40,
-          height: 40,
-          color: Colors.grey.shade300,
-          child: const Icon(Icons.error, color: Colors.red),
-        ),
       ),
     );
   }

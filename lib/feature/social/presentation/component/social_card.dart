@@ -1,5 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_exam/presentation/component/custom_network_image.dart';
 
 class SocialCard extends StatelessWidget {
   const SocialCard({
@@ -19,8 +19,10 @@ class SocialCard extends StatelessWidget {
         borderRadius: const BorderRadius.all(
           Radius.circular(8),
         ),
-        child: CachedNetworkImage(
+        child: CustomNetworkImage(
           imageUrl: iconUrl,
+          width: 40,
+          height: 40,
         ),
       ),
     );
