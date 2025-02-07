@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_exam/feature/company/presentation/screen/companies_screen.dart';
 import 'package:flutter_exam/feature/social/presentation/component/social_card.dart';
 import 'package:flutter_exam/feature/social/presentation/screen/social_details_screen.dart';
 
@@ -55,6 +56,14 @@ class _MoreButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const CompaniesScreen(),
+          ),
+        );
+      },
       child: Container(
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(
