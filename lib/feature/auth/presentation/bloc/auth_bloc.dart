@@ -58,6 +58,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       (data) {
         emit(
           state.copyWith(
+            user: User.empty,
             authStatus: AuthStatus.unauthenticated,
             requestStatus: AuthRequestStatus.success,
           ),

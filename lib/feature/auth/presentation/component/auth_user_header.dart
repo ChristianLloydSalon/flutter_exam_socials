@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_exam/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:flutter_exam/feature/auth/presentation/bloc/auth_options_cubit.dart';
-import 'package:flutter_exam/feature/auth/presentation/screen/login_screen.dart';
 import 'package:flutter_exam/presentation/component/custom_button.dart';
-import 'package:go_router/go_router.dart';
 
 class AuthUserHeader extends StatelessWidget {
   const AuthUserHeader({super.key});
@@ -27,6 +25,7 @@ class _AuthDetailsView extends StatelessWidget {
     return Column(
       children: [
         GestureDetector(
+          behavior: HitTestBehavior.translucent,
           onTap: () => context.read<AuthOptionsCubit>().show(),
           child: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
@@ -51,21 +50,11 @@ class _AuthDetailsView extends StatelessWidget {
             if (shown) {
               return Column(
                 children: [
-                  BlocListener<AuthBloc, AuthState>(
-                    listener: (context, state) {
-                      if (state.requestStatus.isSuccess &&
-                          state.authStatus.isUnauthenticated) {
-                        context.pushReplacementNamed(LoginScreen.name);
-                      }
+                  CustomButton(
+                    label: 'Logout',
+                    onTap: () {
+                      context.read<AuthBloc>().add(const AuthLogoutRequested());
                     },
-                    child: CustomButton(
-                      label: 'Logout',
-                      onTap: () {
-                        context
-                            .read<AuthBloc>()
-                            .add(const AuthLogoutRequested());
-                      },
-                    ),
                   ),
                   CustomButton(
                     label: 'Cancel',

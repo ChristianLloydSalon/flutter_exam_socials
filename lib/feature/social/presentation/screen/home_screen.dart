@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_exam/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:flutter_exam/feature/auth/presentation/component/auth_user_header.dart';
+import 'package:flutter_exam/feature/auth/presentation/screen/login_screen.dart';
 import 'package:flutter_exam/feature/social/presentation/component/socials_view.dart';
 import 'package:flutter_exam/presentation/component/custom_loading_indicator.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../di/social_service_locator.dart';
 import '../bloc/socials_bloc.dart';
@@ -21,9 +24,20 @@ class HomeScreen extends StatelessWidget {
         ..add(
           const SocialsRequested(),
         ),
-      child: const Scaffold(
-        body: _HomeScreen(),
-      ),
+      child: BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
+        if (state.requestStatus.isSuccess &&
+            state.authStatus.isUnauthenticated) {
+          context.pushReplacementNamed(LoginScreen.name);
+        }
+      }, builder: (context, state) {
+        return Scaffold(
+          body: state.requestStatus.isLoading
+              ? const Center(
+                  child: CustomLoadingIndicator(spiel: 'Logging out'),
+                )
+              : const _HomeScreen(),
+        );
+      }),
     );
   }
 }
